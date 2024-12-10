@@ -1,0 +1,33 @@
+# Ignorar entornos virtuales
+venv/
+.env/
+env/
+
+# Archivos de compilación de Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Archivos de configuración de IDEs comunes
+.idea/
+.vscode/
+
+# Archivos de logs
+*.log
+
+# Archivos generados por pytest
+*.sqlite
+*.pdb
+
+# Archivos de base de datos SQLite si los usas
+*.db
+*.db-journal
+
+# Archivos de distribución de Python
+dist/
+build/
+*.egg-info/
+
+# Ignorar archivos específicos de OS como .DS_Store en macOS
+.DS_Store

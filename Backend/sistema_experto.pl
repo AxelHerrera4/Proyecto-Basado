@@ -6,6 +6,10 @@ juego('FIFA 24', 'Multiplataforma', 'EA Sports', 'Deportes', 4, 3, 2024, 80, 15,
 juego('God of War', 'PlayStation', 'Santa Monica Studio', 'Aventura/Acción', 1, 18, 2018, 92, 5, 3).
 juego('Among Us', 'Multiplataforma', 'Innersloth', 'Social/Deducción', 10, 7, 2018, 85, 10, 5).
 
+
+%Consulta de prueba:
+%recomendar_juego(Juego, 'PlayStation', 'Aventura/RPG', 1, 17, 2012).
+
 % Regla para buscar juegos según plataforma
 es_para_plataforma(Juego, Plataforma) :-
     juego(Juego, Plataforma, _, _, _, _, _, _, _, _).

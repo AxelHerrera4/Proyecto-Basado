@@ -25,7 +25,7 @@ def recomendar():
     # Obtener la edad mínima recomendada
     edad = edad_map.get(edad_texto, 0)  # Si no encuentra, toma 0 como valor por defecto
     
-    anio_actual = 2024  # Suponemos el año actual
+    anio_actual = 2010  # Suponemos el año actual
     
     # Consulta a Prolog
     query = f"recomendar_juego(Juego, '{plataforma}', '{genero}', {jugadores}, {edad}, {anio_actual})"
@@ -36,6 +36,7 @@ def recomendar():
         messagebox.showinfo("Recomendación", f"Juegos recomendados:\n{juegos}")
     else:
         messagebox.showinfo("Recomendación", "No se encontraron juegos que cumplan los criterios.")
+
 
 # Interfaz gráfica
 ventana = tk.Tk()
