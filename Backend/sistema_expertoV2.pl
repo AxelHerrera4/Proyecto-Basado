@@ -356,42 +356,42 @@ clasificacion_edades(m, 17).     % Mayores de 17 a�os
 clasificacion_edades(rp, 18).    % Clasificaci�n pendiente, se asume mayores de 18 a�os
 
 
-% Regla para obtener juegos por g�nero
+%%% Regla para obtener juegos por g�nero
 juegos_por_genero(Genero, Juego) :-
     juego(Juego, Generos, _, _, _, _, _, _, _, _),
     member(Genero, Generos).
 
-% Regla para obtener juegos de una plataforma espec�fica
+%%% Regla para obtener juegos de una plataforma espec�fica
 juegos_por_plataforma(Plataforma, Juego) :-
     juego(Juego, _, _, Plataforma, _, _, _, _, _, _).
 
-% Regla para obtener juegos multijugador en l�nea
+%%% Regla para obtener juegos multijugador en l�nea
 juegos_multijugador_en_linea(Juego) :-
     juego(Juego, _, _, _, _, multijugador_en_linea, _, _, _, _).
 
-% Regla para obtener juegos de un desarrollador espec�fico
+%%% Regla para obtener juegos de un desarrollador espec�fico
 juegos_por_desarrollador(Desarrollador, Juego) :-
     juego(Juego, _, Desarrollador, _, _, _, _, _, _, _).
 
 
-% Listar todos los géneros
+%%% Listar todos los géneros
 todosGeneros():- findall(Genero, juego(_, Genero, _, _, _, _, _, _, _, _), Generos),
                 aplanar(Generos, Lista),
                 sort(Lista, ListaFinal),
                 imprimirOpciones(ListaFinal).
 
-% Listar todos los años de lanzamiento
+%%% Listar todos los años de lanzamiento
 todosAniosLanzamiento():- findall(Año, juego(_, _, _, _, _, _, Año, _, _, _), Años),
                          msort(Años, ListaFinal),
                          imprimirOpciones(ListaFinal).
 
-% Listar todos los desarrolladores
+%%% Listar todos los desarrolladores
 todosDesarrolladores():- findall(Desarrolladora, juego(_, _, Desarrolladora, _, _, _, _, _, _, _), Desarrolladoras),
                         sort(Desarrolladoras, ListaFinal),
                         imprimirOpciones(ListaFinal).
 
                         
-% Filtrar videojuegos según edad y clasificación
+%%% Filtrar videojuegos según edad y clasificación
 obtenerCategoriaPorEdad(Edad, Categoria) :-
     (Edad =< 10, clasifPorEdadFiltrada(10, Categoria), !);
     (Edad > 10, Edad =< 13, clasifPorEdadFiltrada(13, Categoria), !);
@@ -399,89 +399,81 @@ obtenerCategoriaPorEdad(Edad, Categoria) :-
     (Edad >= 18, clasifPorEdadFiltrada(18, Categoria)).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Regla para recomendar juegos
-%recomendar_juego(Juego, Plataforma, Genero, TipoJugadores, Edad, AnioActual) :-
-%    nonvar(AnioActual),
-%    juego(Juego, Generos, _, Plataforma, Clasificacion, Jugadores, AnioJuego, CriticasPos, _, CriticasNeg),
-%    member(Genero, Generos),
-%    sub_atom(Jugadores, 0, _, _, TipoJugadores),
-%    clasificacion_valida(Edad, Clasificacion),
-%    AnioActual - AnioJuego =< 5,
-%    CriticasPos > CriticasNeg.
-
-
-
-%recomendar_juego(Juego, xbox, estrategia, multijugador_local, 15, 2012).
+%%% recomendar_juego(Juego, xbox, estrategia, multijugador_local, 15, 2012).
 
 clasificacion_valida(Edad, Clasificacion) :-
     clasificacion_edades(Clasificacion, EdadRequerida),
     Edad >= EdadRequerida.
 
-% Aplanar listas
+%%% Aplanar listas
 aplanar([], []).
 aplanar([L|Ls], FlatL) :- 
     !, aplanar(L, NewL), aplanar(Ls, NewLs), append(NewL, NewLs, FlatL).
 aplanar(L, [L]).
 
-% Imprimir opciones
+%%% Imprimir opciones
 imprimirOpciones([]):- !.
 imprimirOpciones([Cabeza|Cola]):- write(Cabeza), nl, imprimirOpciones(Cola).
 
-% Eliminar duplicados
+%%% Eliminar duplicados
 borrarRepetidos(Lista, ListaSinDuplicados) :-
     sort(Lista, ListaSinDuplicados).
 
-% Listar campos genéricos
+%%% Listar campos genéricos
 listarCampo(Indice) :-
     findall(Valor, juego(_, _, _, _, _, _, _, _, _, _), Valores),
     sort(Valores, ValoresUnicos),
     imprimirOpciones(ValoresUnicos).
 
 
-% Listar todos los modos de juego
+%%% Listar todos los modos de juego
 todosModosDeJuego() :-
     findall(Modo, juego(_, _, _, _, _, Modo, _, _, _, _), Modos),
     sort(Modos, ModosUnicos),
     imprimirOpciones(ModosUnicos).
 
-% Listar todas las plataformas
+%%% Listar todas las plataformas
 todasPlataformas() :-
     findall(Plataforma, juego(_, _, _, Plataforma, _, _, _, _, _, _), Plataformas),
     sort(Plataformas, PlataformasUnicas),
     imprimirOpciones(PlataformasUnicas).
 
-% Listar todas las clasificaciones
+%%% Listar todas las clasificaciones
 todasClasificaciones() :-
     findall(Clasificacion, juego(_, _, _, _, Clasificacion, _, _, _, _, _), Clasificaciones),
     sort(Clasificaciones, ClasificacionesUnicas),
     imprimirOpciones(ClasificacionesUnicas).
 %% hechos: juego(Nombre, Generos, Desarrolladora, Plataforma,  Jugadores, EdadMinima o clasificacion, AñoLanzamiento, CriticasPositivas, CriticasNeutrales, CriticasNegativas)
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REPETIDA
 % Regla para obtener juegos por género
 juegos_por_genero(Genero, Juego) :-
     juego(Juego, Generos, _, _, _, _, _, _, _, _),
     member(Genero, Generos).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REPETIDA
 % Regla para obtener juegos de una plataforma específica
 juegos_por_plataforma(Plataforma, Juego) :-
     juego(Juego, _, _, Plataforma, _, _, _, _, _, _).
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REPETIDA
 % Regla para obtener juegos multijugador en línea
 juegos_multijugador_en_linea(Juego) :-
     juego(Juego, _, _, _, _, multijugador_en_linea, _, _, _, _).
 
 
-% Regla para obtener juegos de una calificación específica
+%%% Regla para obtener juegos de una calificación específica
 juegos_por_calificacion_mayor(CalificacionBuscada, Juego) :-
     juego(Juego, _, _, _, _, _, _, Calificacion, _, _).
     Calificacion >= CalificacionBuscada.
     
-% Regla para encontrar el juego con la mejor calificación
+%%% Regla para encontrar el juego con la mejor calificación
 mejor_calificacion(JuegoMejor, CalificacionMaxima) :-
     juego(JuegoMejor, _, _, _, CalificacionMaxima, _, _, _, _, _),
     not((juego(_, _, _, _, Calificacion, _, _, _, _, _), Calificacion > CalificacionMaxima)).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REPETIDA
 % Regla para obtener juegos de un desarrollador específico
 juegos_por_desarrollador(Desarrollador, Juego) :-
     juego(Juego, _, Desarrollador, _, _, _, _, _, _, _).
@@ -489,20 +481,20 @@ juegos_por_desarrollador(Desarrollador, Juego) :-
 % hechos: juego(Nombre, Generos, Desarrolladora, Plataforma,   EdadMinima o clasificacion, Jugadores,, AñoLanzamiento, CriticasPositivas, CriticasNeutrales, CriticasNegativas)
 %juego(abyss_odyssey_extended_dream, [accion, aventura], ace_team, playstation, t, cooperativo, 2015, 3, 11, 2).
 
-% Regla para obtener juegos aptos para una edad minima
+%%% Regla para obtener juegos aptos para una edad minima
 juegos_por_edad_minima(Edad, Juego) :-
     juego(Juego, _, _, _, Calificacion, _, _, _, _, _),
     clasificacion_edades(Calificacion, EdadMinima),
     Edad >= EdadMinima.
 
 
-%Regla para recomendar un juego basado en género y plataforma
+%%% Regla para recomendar un juego basado en género y plataforma
 
 juegos_por_anio_mayor(AnioBuscado, Juego) :-
     juego(Juego, _, _, _, _, _, Anio, _, _, _),
     Anio > AnioBuscado.
 
-% Regla para recomendar un juego basado en multiples criterios
+%%% Regla para recomendar un juego basado en multiples criterios
 
 recomendar_juego(Juego, GeneroBuscado, PlataformaBuscada, CalificacionBuscada, EdadMinima, AnioBuscado) :-
     juegos_por_genero(GeneroBuscado, Juego),
@@ -513,7 +505,7 @@ recomendar_juego(Juego, GeneroBuscado, PlataformaBuscada, CalificacionBuscada, E
 
 %findall(Juego, recomendar_juego(Juego, aventura, playstation, CalificacionBuscada, 13, 2012), Lista).
 
-% Regla para obtener los 10 mejores juegos según críticas positivas
+%%% Regla para obtener los 10 mejores juegos según críticas positivas
 top_10_juegos_mejores(ListaTop10) :-
     % Encontrar todos los juegos con sus críticas positivas
     findall([CriticasPos, Juego],
@@ -524,14 +516,10 @@ top_10_juegos_mejores(ListaTop10) :-
     % Extraer solo los nombres de los primeros 10 juegos
     obtener_top_n(10, ListaOrdenada, ListaTop10).
 
-% Regla auxiliar para obtener los primeros N elementos de una lista
+%%% Regla auxiliar para obtener los primeros N elementos de una lista
 obtener_top_n(0, _, []) :- !.
 obtener_top_n(_, [], []) :- !.
 obtener_top_n(N, [[_, Juego]|T], [Juego|R]) :-
     N > 0,
     N1 is N - 1,
     obtener_top_n(N1, T, R).
-
-
-%recomendar_juego(Juego, accion, playstation, 14, 10,AnioBuscado).
-%recomendar_juego(Juego, accion, playstation, 14, 10, 2012)
