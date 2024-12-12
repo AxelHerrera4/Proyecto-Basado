@@ -188,7 +188,7 @@ export default function Home() {
       >
         Ver Top 10 Mejores Juegos
       </button>
-
+      <br></br>
       {showTop10 && (
         <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-600 flex flex-col items-center justify-center px-4">
           <h1 className="text-4xl font-extrabold text-white mb-8 font-fascinate">

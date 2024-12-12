@@ -347,13 +347,13 @@ juego(heroki, [accion, aventura], picomy, nintendo, e, multijugador_local, 2018,
 juego(hexologic, [rompecabezas, simulacion, estrategia], mythicowl, nintendo, e, multijugador_local, 2018, 3, 8, 0).
 juego(hitman, [miscelaneos, accion, aventura], io_interactive, playstation, m, multijugador_local, 2016, 38, 2, 0).
 
-% Mapeo de clasificaciones por edad a valores m�nimos
+% Mapeo de clasificaciones por edad a valores minimos
 clasificacion_edades(e, 0).      % Para todos
-clasificacion_edades(pg, 7).     % Supervisi�n sugerida, mayores de 7 a�os
-clasificacion_edades(e10, 10).  % Mayores de 10 a�os
-clasificacion_edades(t, 13).     % Mayores de 13 a�os
-clasificacion_edades(m, 17).     % Mayores de 17 a�os
-clasificacion_edades(rp, 18).    % Clasificaci�n pendiente, se asume mayores de 18 a�os
+clasificacion_edades(pg, 7).     % Supervision sugerida, mayores de 7 anios
+clasificacion_edades(e10, 10).  % Mayores de 10 anios
+clasificacion_edades(t, 13).     % Mayores de 13 anios
+clasificacion_edades(m, 17).     % Mayores de 17 anios
+clasificacion_edades(rp, 18).    % Clasificacion pendiente, se asume mayores de 18 anios
 
 
 %%% Regla para obtener juegos por g�nero
@@ -381,8 +381,8 @@ todosGeneros():- findall(Genero, juego(_, Genero, _, _, _, _, _, _, _, _), Gener
                 imprimirOpciones(ListaFinal).
 
 %%% Listar todos los años de lanzamiento
-todosAniosLanzamiento():- findall(Año, juego(_, _, _, _, _, _, Año, _, _, _), Años),
-                         msort(Años, ListaFinal),
+todosAniosLanzamiento():- findall(Anio, juego(_, _, _, _, _, _, Anio, _, _, _), Anios),
+                         sort(Anios, ListaFinal),
                          imprimirOpciones(ListaFinal).
 
 %%% Listar todos los desarrolladores
@@ -447,7 +447,7 @@ todasClasificaciones() :-
 
 %%% Regla para obtener juegos de una calificación específica
 juegos_por_calificacion_mayor(CalificacionBuscada, Juego) :-
-    juego(Juego, _, _, _, _, _, _, Calificacion, _, _).
+    juego(Juego, _, _, _, _, _, _, Calificacion, _, _),
     Calificacion >= CalificacionBuscada.
     
 %%% Regla para encontrar el juego con la mejor calificación
@@ -481,7 +481,7 @@ juegos_por_edad_minima(Edad, Juego) :-
 
 juegos_por_anio_mayor(AnioBuscado, Juego) :-
     juego(Juego, _, _, _, _, _, Anio, _, _, _),
-    Anio > AnioBuscado.
+    Anio >= AnioBuscado.
 
 %%% Regla para obtener los juegos por anio especifico
 juegos_por_anio(Anio, Juego) :-
@@ -516,3 +516,17 @@ obtener_top_n(N, [[_, Juego]|T], [Juego|R]) :-
     N > 0,
     N1 is N - 1,
     obtener_top_n(N1, T, R).
+
+
+   %% %recomendar_juego(Juego, competencia, playstation, 24, 10, 2016).
+   %% %recomendar_juego(Juego, estrategia, xbox, 20, 12, 2012).
+   %% %recomendar_juego(Juego, simulacion, nintendo, 5, 16, 2017).
+
+  %%%  %recomendar_juego(Juego, rompecabezas, nintendo, 1, 5, 2017).
+%%%recomendar_juego(Juego, aventura, nintendo, 5, 10, 2018).
+%%recomendar_juego(Juego, competencia, nintendo, 2, 10, 2018).
+
+
+%recomendar_juego(Juego, juego_de_cartas, pc, 35, 15, 2011).
+%recomendar_juego(Juego, juegos_de_fantasia, playstation, 90, 17, 2014).
+
