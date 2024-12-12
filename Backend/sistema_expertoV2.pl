@@ -445,24 +445,6 @@ todasClasificaciones() :-
     imprimirOpciones(ClasificacionesUnicas).
 %% hechos: juego(Nombre, Generos, Desarrolladora, Plataforma,  Jugadores, EdadMinima o clasificacion, AñoLanzamiento, CriticasPositivas, CriticasNeutrales, CriticasNegativas)
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REPETIDA
-% Regla para obtener juegos por género
-juegos_por_genero(Genero, Juego) :-
-    juego(Juego, Generos, _, _, _, _, _, _, _, _),
-    member(Genero, Generos).
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REPETIDA
-% Regla para obtener juegos de una plataforma específica
-juegos_por_plataforma(Plataforma, Juego) :-
-    juego(Juego, _, _, Plataforma, _, _, _, _, _, _).
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REPETIDA
-% Regla para obtener juegos multijugador en línea
-juegos_multijugador_en_linea(Juego) :-
-    juego(Juego, _, _, _, _, multijugador_en_linea, _, _, _, _).
-
-
 %%% Regla para obtener juegos de una calificación específica
 juegos_por_calificacion_mayor(CalificacionBuscada, Juego) :-
     juego(Juego, _, _, _, _, _, _, Calificacion, _, _).
@@ -473,10 +455,18 @@ mejor_calificacion(JuegoMejor, CalificacionMaxima) :-
     juego(JuegoMejor, _, _, _, CalificacionMaxima, _, _, _, _, _),
     not((juego(_, _, _, _, Calificacion, _, _, _, _, _), Calificacion > CalificacionMaxima)).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REPETIDA
-% Regla para obtener juegos de un desarrollador específico
-juegos_por_desarrollador(Desarrollador, Juego) :-
-    juego(Juego, _, Desarrollador, _, _, _, _, _, _, _).
+%%% Regla obtener juegos por crítica positiva mínima
+juegos_por_criticas_positivas_minimas(CriticasMinimas, Juego) :-
+    juego(Juego, _, _, _, _, _, _, CriticasPositivas, _, _),
+    CriticasPositivas >= CriticasMinimas.
+
+%%% Regla obtener juegos por clasificación específica
+juegos_por_clasificacion(Clasificacion, Juego) :-
+    juego(Juego, _, _, _, Clasificacion, _, _, _, _, _).
+
+%%% Regla obtener juegos de un desarrollador específico lanzados en un año determinado
+juegos_por_desarrollador_y_anio(Desarrollador, Anio, Juego) :-
+    juego(Juego, _, Desarrollador, _, _, _, Anio, _, _, _).
 
 % hechos: juego(Nombre, Generos, Desarrolladora, Plataforma,   EdadMinima o clasificacion, Jugadores,, AñoLanzamiento, CriticasPositivas, CriticasNeutrales, CriticasNegativas)
 %juego(abyss_odyssey_extended_dream, [accion, aventura], ace_team, playstation, t, cooperativo, 2015, 3, 11, 2).
@@ -487,12 +477,15 @@ juegos_por_edad_minima(Edad, Juego) :-
     clasificacion_edades(Calificacion, EdadMinima),
     Edad >= EdadMinima.
 
-
 %%% Regla para recomendar un juego basado en género y plataforma
 
 juegos_por_anio_mayor(AnioBuscado, Juego) :-
     juego(Juego, _, _, _, _, _, Anio, _, _, _),
     Anio > AnioBuscado.
+
+%%% Regla para obtener los juegos por anio especifico
+juegos_por_anio(Anio, Juego) :-
+    juego(Juego, _, _, _, _, _, Anio, _, _, _).
 
 %%% Regla para recomendar un juego basado en multiples criterios
 
